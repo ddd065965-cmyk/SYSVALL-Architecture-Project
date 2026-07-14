@@ -1,0 +1,30 @@
+services:
+
+  debian_lab:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+    image: system-architect-debian:1.0
+    container_name: debian_lab
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../bash:/lab/bash
+      - ../scheduling:/lab/scheduling
+      - ../scripts:/lab/scripts
+      - ../sql:/lab/sql
+      - ../web:/lab/web
+
+  mysql_server:
+    image: mysql:8.0
+    container_name: mysql_server
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: etudiants
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
